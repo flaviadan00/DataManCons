@@ -7,6 +7,7 @@
 
 # In R salviamo valori dentro oggetti con <-
 x <- 10
+  # è la stessa cosa, ma meno comune
 nome <- "Michele"
 
 x
@@ -63,12 +64,20 @@ is.double(numero1)
 is.integer(numero1)
 is.character(testo)
 is.logical(logico)
-
+is.character(numero1)
 # as.* serve per convertire (coercizione)
-as.character(numero1)
+y <- as.character(numero1)
+
+typeof(y)
+typeof(numero1)
+
 as.numeric("12")
+
+as.numeric(testo)
 as.logical(1)      # 1 diventa TRUE
 as.logical(0)      # 0 diventa FALSE
+
+as.logical(testo)
 
 # Attenzione: non tutto si può convertire bene
 as.numeric("ciao") # produce NA con warning
@@ -89,7 +98,7 @@ class(v_num)
 typeof(v_num)
 
 # Se mescolo tipi diversi, R forza tutto verso un tipo comune
-v_misto <- c(1, 2, "tre")
+v_misto <- c(1, 2, "tre", T)
 v_misto
 class(v_misto)   # character
 
@@ -99,7 +108,7 @@ length(v_num)
 # Operazioni vettoriali
 v_num + 10
 v_num * 2
-sum(v_num)
+sum(v_num, na.rm = T)
 mean(v_num)
 
 # Selezione per posizione
@@ -107,15 +116,18 @@ v_num[1]
 v_num[2:3]
 
 # Selezione logica
-v_num[v_num > 2]
+v_num[v_num >= 2]
 
-
+which(v_num >= 2)
 ### 5) VALORI MANCANTI E SPECIALI ----------------------------
 
 v <- c(2, 4, NA, 8)
 
 v
 is.na(v)
+which(is.na(v))
+
+sum(is.na(v))
 
 sum(v)                  # NA
 sum(v, na.rm = TRUE)    # ignora NA
@@ -137,6 +149,8 @@ is.nan(0 / 0)
 # I factor servono per variabili categoriche
 habitat <- c("bosco", "prato", "bosco", "roccia", "prato")
 
+class(habitat)
+
 habitat_f <- factor(habitat)
 
 habitat_f
@@ -149,9 +163,12 @@ disturbo <- factor(c("basso", "alto", "medio", "basso"),
                    levels = c("basso", "medio", "alto"),
                    ordered = TRUE)
 
+
 disturbo
 levels(disturbo)
 
+disturbo_n <- factor(c("basso", "alto", "medio", "basso"))
+levels(disturbo_n)
 
 ### 7) MATRICE -----------------------------------------------
 
@@ -187,18 +204,18 @@ typeof(mat_mista)
 # - colonne di tipi diversi
 # - ogni colonna deve avere stessa lunghezza
 
-df <- data.frame(
-  sito = c("A", "B", "C"),
-  quota = c(1200, 1450, 980),
-  pascolo = c(TRUE, FALSE, TRUE)
-)
+df <- data.frame
 
 df
 class(df)
 str(df)
 
+df_t <- as.data.frame(t(df))
+str(df_t)
+
 # Estrazione colonne
 df$quota
+df
 df[["quota"]]
 df[, "quota"]
 
@@ -269,8 +286,9 @@ mia_lista[1]
 
 # Con [[ ]] estraggo il contenuto vero e proprio
 mia_lista[[1]]
-mia_lista[["tabella"]]
+pippo <- mia_lista[["tabella"]]
 
+class(pippo)
 # Posso poi entrare dentro l'oggetto estratto
 mia_lista[["tabella"]]$sito
 
