@@ -4,6 +4,7 @@
 
 ### 1) OGGETTI E ASSEGNAZIONE --------------------------------
 
+
 # In R salviamo valori dentro oggetti con <-
 x <- 10
 nome <- "Michele"
